@@ -1,0 +1,7 @@
+.vs/
+bin/
+.vscode/
+obj/
+lib/
+favicon.ico
+appsettings/

@@ -1,0 +1,64 @@
+﻿<div id="indexWrapper">
+
+    <h3>Welcome to Mendel Bakaleynik's Ajax Pagination web page</h3>
+    <p>This page makes AJAX calls to a MySQL Database and returns paginated user data. It takes in three arguements from the user; Name, Start Date, and End Date. </p>
+    <p>Since I'm working with a small set of data I set the pagination to break after just a small number of results have been returned, That can be easily changed.</p>
+    <br>
+
+    <h3>Filters</h3>
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="LastName">Last Name</label>
+            <input type="text" name="LastName" id="LastName" class="form-control">
+        </div>
+        
+        <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input type="date" name="startDate" id="startDate" class="form-control">
+        </div>
+
+        <div class="form-group">
+        <label for="endDate">End Date</label>
+        <input type="date" name="endDate" id="endDate" class="form-control">
+        </div>
+
+    </div>
+    <br>    
+
+    <h3>Results</h3>
+    <h5>Page Number:</h5>
+    @{
+        for(var idx = 0; idx < ViewBag.NumOfPages; idx++)
+        {
+            <a class="PageNumber">@(idx + 1)</a>
+        }
+    }
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email Address</th>
+                <th>Registration Date</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+                @{
+                    var AllUsers = @ViewBag.AllUsers;
+                    foreach (var user in AllUsers)
+                    {
+                        <tr>
+                        <td>@user.Id</td>
+                        <td>@user.first_name</td>
+                        <td>@user.last_name</td>
+                        <td>@user.email</td>
+                        <td>@user.created_at</td>
+                        </tr>
+                    }
+                }
+        </tbody>
+    </table>
+</div>
+
