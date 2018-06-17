@@ -3,6 +3,7 @@
     <h3>Welcome to Mendel Bakaleynik's Ajax Pagination web page</h3>
     <p>This page makes AJAX calls to a MySQL Database and returns paginated user data. It takes in three arguements from the user; Name, Start Date, and End Date. </p>
     <p>Since I'm working with a small set of data I set the pagination to break after just a small number of results have been returned, That can be easily changed.</p>
+    <p>The current configuration (6/15/2018) displays three (3) results per page by default. This is due to my working with a very small set of test data. If you wish to increase the default amount simply change the "ResultsPerPage" default variable in the two methods where it is used (In the HomeController Index Method and FilterUsers Method).</p>
     <br>
 
     <h3>Filters</h3>
@@ -22,15 +23,23 @@
         <input type="date" name="endDate" id="endDate" class="form-control">
         </div>
 
+        <div class="form-group">
+        <label for="resultsPerPage">Results Per Page</label>
+        <input type="number" step="1" name="resultsPerPage" id="resultsPerPage" class="form-control">
+        </div>
     </div>
     <br>    
 
     <h3>Results</h3>
-    <h5>Page Number:</h5>
+    <div id="NumOfPages">
+        
+        <h5>Page Number:</h5>
+    </div>
+    
     @{
         for(var idx = 0; idx < ViewBag.NumOfPages; idx++)
         {
-            <a class="PageNumber">@(idx + 1)</a>
+                <a class="PageNumber">@(idx + 1)</a>
         }
     }
 
@@ -61,4 +70,3 @@
         </tbody>
     </table>
 </div>
-
