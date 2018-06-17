@@ -9,5 +9,5 @@ Ajax Pagination example web site. Uses C#, ASP.NET 4 MVC, jQuery, LINQ, Bootstra
 
 # Documentation
 
-The current configuration (6/15/2018) only displays three (3) results per page. This is due to my working with a very small set of test data.
-If you wish to increase that amount simply change the "UsersPerPage" page in the two locations it is used (HomeController, Index Method and FilterUsers Method).
+The current configuration (6/15/2018) displays three (3) results per page by default. This is due to my working with a very small set of test data.
+If you wish to increase the default amount simply change the "ResultsPerPage" default variable in the two methods where it is used (In the HomeController Index Method and FilterUsers Method).
