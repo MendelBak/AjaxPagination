@@ -40,52 +40,52 @@ namespace AjaxPagination.Controllers
         public JsonResult FilterUsers(string LastName, DateTime? StartDate = null, DateTime? EndDate = null, int selectedPage = 1, int resultsPerPage = 3)
         {
             List<User> AllUsers;
-            int ResultsPerPage = resultsPerPage;
 
             // There are waaay too many if/else checks here. There has to be a better way to do this. This feels like an immensely poor implementation.
             if (LastName == "GetAllUsers" && StartDate == null && EndDate == null)
             {
-                AllUsers = _context.Users.Skip(selectedPage * ResultsPerPage - ResultsPerPage).Take(ResultsPerPage).ToList();
+                AllUsers = _context.Users.Skip(selectedPage * resultsPerPage - resultsPerPage).Take(resultsPerPage).ToList();
+
             }
             else if (LastName == "GetAllUsers" && StartDate != null && EndDate == null)
             {
-                AllUsers = _context.Users.Where(user => (user.created_at > (DateTime)StartDate)).Skip(selectedPage * ResultsPerPage - ResultsPerPage).Take(ResultsPerPage).ToList();
+                AllUsers = _context.Users.Where(user => (user.created_at > (DateTime)StartDate)).Skip(selectedPage * resultsPerPage - resultsPerPage).Take(resultsPerPage).ToList();
             }
             else if (LastName == "GetAllUsers" && EndDate != null && StartDate == null)
             {
-                AllUsers = _context.Users.Where(user => (user.created_at < (DateTime)EndDate)).Skip(selectedPage * ResultsPerPage - ResultsPerPage).Take(ResultsPerPage).ToList();
+                AllUsers = _context.Users.Where(user => (user.created_at < (DateTime)EndDate)).Skip(selectedPage * resultsPerPage - resultsPerPage).Take(resultsPerPage).ToList();
             }
             else if (LastName == "GetAllUsers" && EndDate != null && StartDate != null)
             {
-                AllUsers = _context.Users.Where(user => (user.created_at > (DateTime)StartDate) && (user.created_at < (DateTime)EndDate)).Skip(selectedPage * ResultsPerPage - ResultsPerPage).Take(ResultsPerPage).ToList();
+                AllUsers = _context.Users.Where(user => (user.created_at > (DateTime)StartDate) && (user.created_at < (DateTime)EndDate)).Skip(selectedPage * resultsPerPage - resultsPerPage).Take(resultsPerPage).ToList();
             }
             else if (StartDate == null && EndDate == null)
             {
-                AllUsers = _context.Users.Where(user => (user.last_name == LastName.First().ToString().ToUpper().Trim()) || (user.last_name == LastName)).Skip(selectedPage * ResultsPerPage - ResultsPerPage).Take(ResultsPerPage).ToList();
+                AllUsers = _context.Users.Where(user => (user.last_name == LastName.First().ToString().ToUpper().Trim()) || (user.last_name == LastName)).Skip(selectedPage * resultsPerPage - resultsPerPage).Take(resultsPerPage).ToList();
             }
             else if (EndDate == null)
             {
-                AllUsers = _context.Users.Where(user => (user.last_name == LastName.First().ToString().ToUpper().Trim()) || (user.last_name == LastName) && (user.created_at > (DateTime)StartDate)).Skip(selectedPage * ResultsPerPage - ResultsPerPage).Take(ResultsPerPage).ToList();
+                AllUsers = _context.Users.Where(user => (user.last_name == LastName.First().ToString().ToUpper().Trim()) || (user.last_name == LastName) && (user.created_at > (DateTime)StartDate)).Skip(selectedPage * resultsPerPage - resultsPerPage).Take(resultsPerPage).ToList();
             }
             else if (StartDate == null)
             {
-                AllUsers = _context.Users.Where(user => (user.last_name == LastName.First().ToString().ToUpper().Trim()) || (user.last_name == LastName) && (user.created_at < (DateTime)EndDate)).Skip(selectedPage * ResultsPerPage - ResultsPerPage).Take(ResultsPerPage).ToList();
+                AllUsers = _context.Users.Where(user => (user.last_name == LastName.First().ToString().ToUpper().Trim()) || (user.last_name == LastName) && (user.created_at < (DateTime)EndDate)).Skip(selectedPage * resultsPerPage - resultsPerPage).Take(resultsPerPage).ToList();
             }
             else
             {
-                AllUsers = _context.Users.Where(user => (user.last_name == LastName.First().ToString().ToUpper().Trim()) || (user.last_name == LastName) && (user.created_at > (DateTime)StartDate) && (user.created_at < (DateTime)EndDate)).Skip(selectedPage * ResultsPerPage - ResultsPerPage).Take(ResultsPerPage).ToList();
+                AllUsers = _context.Users.Where(user => (user.last_name == LastName.First().ToString().ToUpper().Trim()) || (user.last_name == LastName) && (user.created_at > (DateTime)StartDate) && (user.created_at < (DateTime)EndDate)).Skip(selectedPage * resultsPerPage - resultsPerPage).Take(resultsPerPage).ToList();
             }
-
-            // I know that I'm using ViewBag poorly here. I really should make some of these items into one single object that I pass through or some other more elegant solution.
-            // How many results to display per "page".
-            ViewBag.ResultsPerPage = ResultsPerPage;
-            // How many "pages to display.
-            ViewBag.NumOfPages = (int)Math.Ceiling((double)_context.Users.Count() / ResultsPerPage);
-            // Displays the page that the user is currently on.
-            ViewBag.selectedPage = selectedPage;
-            // User/results data.
-            ViewBag.AllUsers = AllUsers;
             return Json(AllUsers);
         }
+
+
+        // This method is supposed to help me determine how many pages to display, however I'm falling into use of Occam's Razor here.
+        // [HttpPost]
+        // [Route("GetNumOfPages")]
+        // public int GetNumOfPages(int numberOfUsersReturned, int resultsPerPage = 3)
+        // {
+        //     int test = resultsPerPage;
+        //     return (numberOfUsersReturned / resultsPerPage);
+        // }
     }
 }

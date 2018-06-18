@@ -1,4 +1,5 @@
-﻿<div id="indexWrapper">
+﻿
+<div id="indexWrapper">
 
     <h3>Welcome to Mendel Bakaleynik's Ajax Pagination web page</h3>
     <p>This page makes AJAX calls to a MySQL Database and returns paginated user data. It takes in three arguements from the user; Name, Start Date, and End Date. </p>
@@ -36,12 +37,14 @@
         <h5>Page Number:</h5>
     </div>
     
-    @{
-        for(var idx = 0; idx < ViewBag.NumOfPages; idx++)
-        {
-                <a class="PageNumber">@(idx + 1)</a>
-        }
+    <div id="pageLinks">
+        @{
+            for(var idx = 0; idx < ViewBag.NumOfPages; idx++)
+            {
+                    <a class="PageNumber">@(idx + 1)</a>
+            }
     }
+    </div>
 
     <table class="table">
         <thead>
@@ -59,7 +62,7 @@
                     foreach (var user in AllUsers)
                     {
                         <tr>
-                        <td>@user.Id</td>
+                        <td class="userId">@user.Id</td>
                         <td>@user.first_name</td>
                         <td>@user.last_name</td>
                         <td>@user.email</td>

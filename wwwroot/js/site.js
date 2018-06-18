@@ -6,7 +6,7 @@ $(document).ready(function () {
         let noNullLastName = "";
         let startDate = $("#startDate").val();
         let endDate = $("#endDate").val();
-        
+
         if ($("#LastName").val().trim() === "") {
             // If no string is entered by the user return a string of "GetAllUsers".
             noNullLastName = "GetAllUsers";
@@ -25,18 +25,16 @@ $(document).ready(function () {
             // Populate new data (for each result from method create a new tr and td and insert into table).
             $.each(data, function (key, val) {
                 let tableEntry =
-                    '<tr> <td>' + val.id + '</td> <td>' + val.first_name + '</td> <td>' + val.last_name + '</td> <td>' + val.email + '</td><td>' + val.created_at + '</td></tr>';
+                    '<tr> <td class="userId">' + val.id + '</td> <td>' + val.first_name + '</td> <td>' + val.last_name + '</td> <td>' + val.email + '</td><td>' + val.created_at + '</td></tr>';
                 $("#tableBody").append(tableEntry);
             });
-
-            // var NumOfPages = parseInt(@ViewBag.NumOfPages);
-            // var NumOfPages = @{ViewBag.NumOfPages};
-            // var NumOfPages = @Html.Raw(Json.Encode(ViewBag.NumOfPages ));
-            // var NumOfPages = @{ViewBag.NumOfPages};
-            // console.log(NumOfPages);
-            // for(var i = 0; i < 7; i++){
-            //     $("#NumOfPages").append("<a class='PageNumber'>", (i + 1), "</a>");
-            // }
+            // Determine the number of pages to display. response = number of pages required for the current batch of results.
+            // $.post("GetNumOfPages", { numberOfUsersReturned: $("totalResults").text(), resultsPerPage: resultsPerPage }, function (response) {
+            //     $(".PageNumber").remove();
+            //     for (var idx = 0; idx < response; idx++) {
+            //         $("#pageLinks").append('<a class="PageNumber">' + (idx + 1) + '</a>');
+            //     }
+            // });
         });
     }
 
@@ -51,8 +49,8 @@ $(document).ready(function () {
         checkInputField();
     })
     // Navigates to anther page of results
-    $(".PageNumber").click(function(){
-        // The argument below is the selectePage valule.
+    $(".PageNumber").click(function () {
+        // The "this.text()" argument below is the "selectedPage" valule.
         checkInputField($(this).text(), $("#resultsPerPage").val());
     });
     // Changes the amount of results displayed per page.
